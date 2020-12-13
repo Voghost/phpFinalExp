@@ -2,59 +2,123 @@
 
 class Staff
 {
-    public string $userName = "test";  //用户名
-    public $password;  //密码
-    public $phoneNum;
+    private $staffId;           //用户id
+    private $staffName;         //用户名
+    private $staffPhone;        //用户电话
+    private $staffFileId;       //用户文件id
+    private $staffPassword;     //用户密码
 
     /**
-     * @return string
+     * Staff constructor.
+     * @param $staffId
+     * @param $staffName
+     * @param $staffPhone
+     * @param $staffFileId
+     * @param $staffPassword
      */
-    public function getUserName(): string
+    public function __construct($staffId, $staffName, $staffPhone, $staffFileId, $staffPassword)
     {
-        return $this->userName;
-    }
-
-    /**
-     * @param string $userName
-     */
-    public function setUserName(string $userName): void
-    {
-        $this->userName = $userName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password): void
-    {
-        $this->password = $password;
+        $this->staffId = $staffId;
+        $this->staffName = $staffName;
+        $this->staffPhone = $staffPhone;
+        $this->staffFileId = $staffFileId;
+        $this->staffPassword = $staffPassword;
     }
 
     /**
      * @return mixed
      */
-    public function getPhoneNum()
+    public function getStaffId()
     {
-        return $this->phoneNum;
+        return $this->staffId;
     }
 
     /**
-     * @param mixed $phoneNum
+     * @param mixed $staffId
      */
-    public function setPhoneNum($phoneNum): void
+    public function setStaffId($staffId): void
     {
-        $this->phoneNum = $phoneNum;
-    } //手机号
+        $this->staffId = $staffId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffName()
+    {
+        return $this->staffName;
+    }
+
+    /**
+     * @param mixed $staffName
+     */
+    public function setStaffName($staffName): void
+    {
+        $this->staffName = $staffName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffPhone()
+    {
+        return $this->staffPhone;
+    }
+
+    /**
+     * @param mixed $staffPhone
+     */
+    public function setStaffPhone($staffPhone): void
+    {
+        $this->staffPhone = $staffPhone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffFileId()
+    {
+        return $this->staffFileId;
+    }
+
+    /**
+     * @param mixed $staffFileId
+     */
+    public function setStaffFileId($staffFileId): void
+    {
+        $this->staffFileId = $staffFileId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffPassword()
+    {
+        return $this->staffPassword;
+    }
+
+    /**
+     * @param mixed $staffPassword
+     */
+    public function setStaffPassword($staffPassword): void
+    {
+        $this->staffPassword = $staffPassword;
+    }
 
 
-
+    /**
+     * 将类转化为数组
+     * @return array
+     */
+    public function getArray(): array
+    {
+        return array(
+            $this->staffId,
+            $this->staffName,
+            $this->staffPhone,
+            $this->staffFileId,
+            $this->staffPassword
+        );
+    }
 
 }
