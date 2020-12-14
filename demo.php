@@ -13,18 +13,19 @@ require_once("./source/DatabaseProcess.php");
 require_once("./source/Entity/Staff.php");
 
 
-$staff = new Staff("S11118", "测试", null, null, "test");
-$a = $staff->getArray();
+$staff = new Staff("S12229", "测试", null, null, "test");
+//$a = $staff->getArray();
+$a =$staff->getArray();
 $databaseProcess = new DatabaseProcess();
-//$isTrue = $databaseProcess->insertByField("staff",$a);
+$isTrue = $databaseProcess->insertValues("staff",$a);
 
 //测试查找
-$result = $databaseProcess->searchByField("staff", "StaffId", "S1111");
+$result = $databaseProcess->searchByField("staff", "StaffName", "测试");
 echo count($result,0)."<br/>";
 echo $result[0]["StaffName"];
 
 
-//测试获取列数
+//测试获取行数
 $num = $databaseProcess->numOfRows("staff");
 echo "<br/>" . $num . "<br/>";
 
@@ -33,7 +34,7 @@ echo "<br/>" . $num . "<br/>";
 
 
 //测试删除数据
-$result = $databaseProcess->deleteByField("staff","StaffId","S11113");
+//$result = $databaseProcess->deleteByField("staff","StaffId","S11113");
 
 
 

@@ -15,7 +15,7 @@ class StaffProcess
     public function insertStaff(Staff $staff)
     {
         $databaseProcess = new DatabaseProcess();
-        $databaseProcess->insertByField($staff, $staff->getArray());
+        $databaseProcess->insertValues($staff, $staff->getArray());
         $databaseProcess->closeConnect();
     }
 
@@ -27,13 +27,29 @@ class StaffProcess
     public function deleteStaffById(string $staffId){
         $databaseProcess = new DatabaseProcess();
         $databaseProcess->deleteByField("staff","StaffId",$staffId);
-
-
     }
 
 
+    /**
+     * 只更新某个字段
+     * @param string $staffId 员工的id
+     * @param string $key 要修改的字段
+     * @param string $value 要修改的字段值
+     */
     public function updateStaffById(string $staffId,string $key,string $value){
+        $databaseProcess = new DatabaseProcess();
+        $databaseProcess->updateByField("staff","StaffId",$staffId,$key,$value);
+        $databaseProcess->closeConnect();
+    }
+
+
+    /**
+     * 更新全部字段
+     * @param Staff $staff
+     */
+    public function updateStaff(Staff $staff){
 
     }
+
 
 }

@@ -53,11 +53,11 @@ class DatabaseProcess
      * @return bool|mysqli_result
      */
     public function updateByField(
-        string $table,
-        string $field,
-        string $fieldValue,
-        string $condition,
-        string $conditionValue
+        string $table,  //要修改的表
+        string $field, //要修改的目标的id
+        string $fieldValue, //要修改的目标的id值
+        string $condition, //要修改的字段名
+        string $conditionValue //要修改的字段值
     )
     {
         $sql = "update {$table} set {$field}='{$fieldValue}' where {$condition} = '{$conditionValue}'";
@@ -81,13 +81,13 @@ class DatabaseProcess
     }
 
 
-    /**
-     * 添加记录
+    /*
+     * 添加记录(通过单纯数组)
      * @param $table
      * @param array $values
      * @return bool|mysqli_result
      */
-    public function insertByField($table, array $values)
+/*    public function insertValues($table, array $values)
     {
         $num = count($values);
         $str = "'" . $values[0] . "'";
@@ -100,6 +100,36 @@ class DatabaseProcess
             $str = $str . ", '" . $values[$i] . "'";
         }
         $sql = "insert into {$table} values(" . $str . ")";
+        $result = mysqli_query($this->link, $sql);
+        $this->tryAndShowError($result);
+        return $result;
+    }*/
+
+
+    /**
+     * 通过键值对插入数据到数据库
+     * @param $table
+     * @param array $values
+     * @return bool|mysqli_result
+     */
+    public function insertValues($table, array $values)
+    {
+        $num = count($values);
+        $key = key($values); //获取第数组第0的key值
+        $value = "'" . current($values) . "'"; //获取第数组第0的value值
+        next($values); //指针转向下一个数组
+
+        for ($i = 1; $i < $num; $i++) {
+            $key = $key . ", " . key($values);
+            if (current($values) == null) {
+                $value = $value . ", null";
+            } else {
+                $value = $value . ", '" . current($values) . "'";
+            }
+            next($values);
+        }
+
+        $sql = "insert into {$table} (" . $key . ") values (" . $value . ")";
         $result = mysqli_query($this->link, $sql);
         $this->tryAndShowError($result);
         return $result;
@@ -120,6 +150,7 @@ class DatabaseProcess
 
 
     /**
+     * 异常处理(输出异常)
      * @param $result
      */
     private function tryAndShowError($result)

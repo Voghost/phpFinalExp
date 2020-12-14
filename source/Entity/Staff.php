@@ -106,19 +106,20 @@ class Staff
     }
 
 
+
+
     /**
-     * 将类转化为数组
-     * @return array
+     * 将类转化为键值对
      */
+
     public function getArray(): array
     {
         return array(
-            $this->staffId,
-            $this->staffName,
-            $this->staffPhone,
-            $this->staffFileId,
-            $this->staffPassword
+            "StaffId" => $this->staffId,
+            "StaffName" => $this->staffName,
+            "StaffPhone" => $this->staffPhone,
+            "StaffFileId" => $this->staffFileId,
+            "StaffPassword" => $this->staffPassword
         );
     }
-
 }
