@@ -39,7 +39,7 @@ class DatabaseProcess
         $sql = "select * from  {$table} where ${field} = '{$value}'";
         $result = mysqli_query($this->link, $sql);
         $this->tryAndShowError($result);
-        return mysqli_fetch_all($result);
+        return mysqli_fetch_all($result,MYSQLI_BOTH);
     }
 
 
