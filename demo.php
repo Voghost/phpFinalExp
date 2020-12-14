@@ -31,6 +31,8 @@ echo "<br/>" . $num . "<br/>";
 
 //测试更新数据
 //$result01 = $databaseProcess->updateByField("staff", "StaffName", "用户1", "StaffId", "S11112");
+$staff1 = new Staff("S11229","更改","1234",null,"test");
+$databaseProcess->updateByArray("staff",$staff1->getArray());
 
 
 //测试删除数据

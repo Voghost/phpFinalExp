@@ -66,6 +66,38 @@ class DatabaseProcess
         return $result;
     }
 
+    /**
+     * 更新表， 通过数组(键值对)批量修改
+     * @param string $table 表名
+     * @param array $arr 数组(键值对)
+     */
+    public function updateByArray(string $table, array $arr)
+    {
+
+        $id = key($arr);
+        $idValue = current($arr);
+
+        $sql = "update {$table} set {$id} = '$idValue'";
+        next($arr);
+
+
+        for ($i = 1; $i < count($arr); $i++) {
+            if (current($arr) == null) {
+                $sql = $sql . ", " . key($arr) . "= null ";
+            } else {
+                $sql = $sql . ", " . key($arr) . "= '" . current($arr) . "' ";
+
+            }
+            next($arr);
+        }
+        $sql = $sql . "where {$id} = '{$idValue}'";
+
+        $result = mysqli_query($this->link, $sql);
+        $this->tryAndShowError($result); //检测是否出错
+
+        return $result;
+    }
+
 
     /**
      * 删除记录, 通过某个字段
@@ -87,23 +119,23 @@ class DatabaseProcess
      * @param array $values
      * @return bool|mysqli_result
      */
-/*    public function insertValues($table, array $values)
-    {
-        $num = count($values);
-        $str = "'" . $values[0] . "'";
-        for ($i = 1; $i < $num; $i++) {
-            if ($values[$i] == null) {
-                $values[$i] = "null";
-                $str = $str . ", " . $values[$i];
-                continue;
+    /*    public function insertValues($table, array $values)
+        {
+            $num = count($values);
+            $str = "'" . $values[0] . "'";
+            for ($i = 1; $i < $num; $i++) {
+                if ($values[$i] == null) {
+                    $values[$i] = "null";
+                    $str = $str . ", " . $values[$i];
+                    continue;
+                }
+                $str = $str . ", '" . $values[$i] . "'";
             }
-            $str = $str . ", '" . $values[$i] . "'";
-        }
-        $sql = "insert into {$table} values(" . $str . ")";
-        $result = mysqli_query($this->link, $sql);
-        $this->tryAndShowError($result);
-        return $result;
-    }*/
+            $sql = "insert into {$table} values(" . $str . ")";
+            $result = mysqli_query($this->link, $sql);
+            $this->tryAndShowError($result);
+            return $result;
+        }*/
 
 
     /**
