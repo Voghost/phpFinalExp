@@ -1,6 +1,8 @@
 <?php
 require_once("source/DatabaseProcess.php");
 require_once("source/Entity/Staff.php");
+require_once("source/Entity/Department.php");
+require_once("source/Entity/Project.php");
 
 /**
  * 用于处理用户数据的类
@@ -25,7 +27,7 @@ class StaffProcess
         //字符串自加1
         $num = (int)substr($maxStaffId, 1);
         $num = $num + 100001;
-        $maxStaffId = "S".substr($num,1); //S -> staff 表示员工
+        $maxStaffId = "S" . substr($num, 1); //S -> staff 表示员工
 
         $staff->setStaffId($maxStaffId);
 
@@ -104,14 +106,72 @@ class StaffProcess
      * 通过员工id查找员工所属部门
      * 多对多: [员工] <--> [员工-部门] <--> [部门]
      * @param string $staffId 员工id
+     * @return array 返回部门对象数组
      */
-    public function searchDepartment(string $staffId)
+    public function searchDepartments(string $staffId): array
     {
         $databaseProcess = new DatabaseProcess();
 
-        $department = $databaseProcess->searchByField("staff_department", "StaffId", "");
-
+        $result = $databaseProcess->searchByField("staff_department", "StaffId", $staffId);
+        $departments = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $arr = $databaseProcess->searchByField("department", "DepartmentId", $result[$i]["DepartmentId"]);
+            $departments[] = new Department(
+                $arr[0]["DepartmentId"],
+                $arr[0]["DepartmentName"],
+                $arr[0]["DepartmentAddress"]
+            );
+        }
+        $databaseProcess->closeConnect();
+        return $departments;
     }
 
+    /**
+     * 通过员工id查找员工拥有项目
+     * 多对多: [员工] <--> [员工-项目] <--> [项目]
+     * @param string $staffId 员工id
+     * @return array 返回项目对象数组
+     */
+    public function searchProjects(string $staffId): array
+    {
+        $databaseProcess = new DatabaseProcess();
 
+        $result = $databaseProcess->searchByField("staff_project", "StaffId", $staffId);
+        $projects = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $arr = $databaseProcess->searchByField("project", "ProjectId", $result[$i]["ProjectId"]);
+            $projects[] = new Project(
+                $arr[0]["ProjectId"],
+                $arr[0]["ProjectName"],
+                $arr[0]["ProjectPathId"],
+                $arr[0]["ProjectRemark"]
+            );
+        }
+        $databaseProcess->closeConnect();
+        return $projects;
+    }
+
+    /**
+     * 通过员工id查找员工拥有任务
+     * 多对多: [员工] <--> [员工-任务] <--> [任务]
+     * @param string $staffId 员工id
+     * @return array 返回任务对象数组
+     */
+    public function searchTasks(string $staffId): array
+    {
+        $databaseProcess = new DatabaseProcess();
+
+        $result = $databaseProcess->searchByField("staff_task", "StaffId", $staffId);
+        $tasks = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $arr = $databaseProcess->searchByField("task", "TaskId", $result[$i]["TaskId"]);
+            $projects[] = new Project(
+                $arr[0]["TaskId"],
+                $arr[0]["TaskName"],
+                $arr[0]["TaskRemark"],
+                $arr[0]["Task"]
+            );
+        }
+        return $projects;
+    }
 }
