@@ -180,6 +180,17 @@ class DatabaseProcess
         return mysqli_fetch_array($result)[0];
     }
 
+    /**
+     * 查询某个字段的最大值
+     * @param $table
+     * @param $field
+     * @return string
+     */
+    public function searchMax($table, $field): string{
+        $sql = "select MAX({$field}) from {$table}";
+        $result = mysqli_query($this->link, $sql);
+        return mysqli_fetch_array($result)[0];
+    }
 
     /**
      * 异常处理(输出异常)
