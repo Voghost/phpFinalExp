@@ -88,8 +88,8 @@ class StaffProcess
             $staffs[] = new Staff($result[$i]["StaffId"],
                 $result[$i]["StaffName"],
                 $result[$i]["StaffPhone"],
-                $staffs[$i]["StaffFileId"],
-                $staffs[$i]["StaffPassword"]);
+                $result[$i]["StaffFileId"],
+                $result[$i]["StaffPassword"]);
         }
         return $staffs;
     }
@@ -97,7 +97,7 @@ class StaffProcess
 
 
     ///////////////////////////////////////////////////////////////
-    /////////////////////      (特有)扩展功能       //////////////////////
+    /////////////////////      (特有)扩展功能       /////////////////
     ///////////////////////////////////////////////////////////////
 
     /**
