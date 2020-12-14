@@ -32,9 +32,9 @@ class DatabaseProcess
      * @param $table
      * @param $field
      * @param $value
-     * @return array
+     * @return array 返回二维数组
      */
-    public function searchByField($table, $field, $value): array
+    public function searchByField(string $table, string $field, string $value): array
     {
         $sql = "select * from  {$table} where ${field} = '{$value}'";
         $result = mysqli_query($this->link, $sql);
@@ -50,7 +50,7 @@ class DatabaseProcess
      * @param string $fieldValue 字段需要更改的字段值
      * @param string $condition 条件
      * @param string $conditionValue 条件值
-     * @return bool|mysqli_result
+     * @return bool|mysqli_result 返回是否更新成功
      */
     public function updateByField(
         string $table,  //要修改的表
@@ -70,6 +70,7 @@ class DatabaseProcess
      * 更新表， 通过数组(键值对)批量修改
      * @param string $table 表名
      * @param array $arr 数组(键值对)
+     * @return bool|mysqli_result 返回是否更新成功
      */
     public function updateByArray(string $table, array $arr)
     {
@@ -186,7 +187,8 @@ class DatabaseProcess
      * @param $field
      * @return string
      */
-    public function searchMax($table, $field): string{
+    public function searchMax($table, $field): string
+    {
         $sql = "select MAX({$field}) from {$table}";
         $result = mysqli_query($this->link, $sql);
         return mysqli_fetch_array($result)[0];
@@ -215,7 +217,7 @@ class DatabaseProcess
      */
     public function closeConnect()
     {
-        mysqli_close($this . $this->link);
+        mysqli_close($this->link);
         return null;
     }
 
