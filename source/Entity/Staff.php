@@ -110,6 +110,7 @@ class Staff
 
     /**
      * 将类转化为键值对
+     * 为了方便存入数据库，键值首字母变为大写
      */
 
     public function getArray(): array
