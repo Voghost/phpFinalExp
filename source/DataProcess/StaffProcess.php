@@ -3,6 +3,7 @@ require_once("source/DatabaseProcess.php");
 require_once("source/Entity/Staff.php");
 require_once("source/Entity/Department.php");
 require_once("source/Entity/Project.php");
+require_once("source/Entity/Task.php");
 
 /**
  * 用于处理用户数据的类
@@ -64,22 +65,24 @@ class StaffProcess
     /**
      * 通过Staff对象实体更新
      * @param Staff $staff 需要更改的对象
+     * @return bool|mysqli_result
      */
     public function updateStaffByEntity(Staff $staff)
     {
         $databaseProcess = new DatabaseProcess();
-        $databaseProcess->updateByArray("staff", $staff->getArray());
+        $result =$databaseProcess->updateByArray("staff", $staff->getArray());
         $databaseProcess->closeConnect();
+        return $result;
     }
 
 
     /**
      * 通过员工的某个字段查找员工(们)的具体信息
      * @param string $field 字段名
-     * @param string $value 字段值
+     * @param mixed $value 字段值
      * @return array
      */
-    public function searchStaff(string $field, string $value): array
+    public function searchStaff(string $field, $value): array
     {
         $databaseProcess = new DatabaseProcess();
         $result = $databaseProcess->searchByField("staff", $field, $value);
@@ -165,13 +168,111 @@ class StaffProcess
         $tasks = array();
         for ($i = 0; $i < count($result, 0); $i++) {
             $arr = $databaseProcess->searchByField("task", "TaskId", $result[$i]["TaskId"]);
-            $projects[] = new Project(
+            $tasks[] = new Task(
                 $arr[0]["TaskId"],
                 $arr[0]["TaskName"],
                 $arr[0]["TaskRemark"],
-                $arr[0]["Task"]
+                $arr[0]["TaskStartDate"],
+                $arr[0]["TaskEndDate"]
             );
         }
-        return $projects;
+        $databaseProcess->closeConnect();
+        return $tasks;
     }
+
+    /**
+     * 获取用户所有的项目状态
+     * @param string $staffId
+     * @return array
+     */
+    public function getProjectStatus(string $staffId): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByField("staff_project", "StaffId", $staffId);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+    /**
+     * 获取用户所有的任务状态
+     * @param string $staffId
+     * @return array
+     */
+    public function getTaskStatus(string $staffId): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByField("staff_task", "StaffId", $staffId);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+
+    /**
+     * 设置项目状态
+     * @param string $staffId
+     * @param string $projectId
+     * @param bool $status
+     * @return bool|mysqli_result
+     */
+    public function setProjectStatus(string $staffId, string $projectId, bool $status = true)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "ProjectStatus" => ($status == true) ? 1 : 0,
+        );
+
+        $condition = array(
+            "StaffId" => $staffId,
+            "ProjectId" => $projectId
+        );
+
+        $result = $databaseProcess->updateByArray("staff_project", $arr, $condition);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+
+    /**
+     * 设置任务状态
+     * @param string $staffId
+     * @param string $taskId
+     * @param bool $status
+     * @return bool|mysqli_result
+     */
+    public function setTaskStatus(string $staffId, string $taskId, bool $status = true)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "TaskStatus" => ($status == true) ? 1 : 0,
+        );
+
+        $condition = array(
+            "StaffId" => $staffId,
+            "TaskId" => $taskId
+        );
+
+        $result = $databaseProcess->updateByArray("staff_task", $arr, $condition);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+    /**
+     * 建立和部门的联系
+     * @param string $staffId
+     * @param string $departmentId
+     * @return bool|mysqli_result
+     */
+    public function connectToDepartment(string $staffId, string $departmentId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "StaffId" => $staffId,
+            "DepartmentId" => $departmentId
+        );
+        $result = $databaseProcess->insertValues("staff_department", $arr);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+
 }
