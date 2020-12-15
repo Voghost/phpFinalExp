@@ -190,6 +190,13 @@ class DatabaseProcess
         next($values); //指针转向下一个数组
 
         for ($i = 1; $i < $num; $i++) {
+
+            //如果是数字类型或为空值    ，不需要单引号
+            $tmp = "'";
+            if (is_numeric(current($values)) || (current($values)) == null) {
+                $tmp = "";
+            }
+
             $key = $key . ", " . key($values);
             if (current($values) == null) {
                 $value = $value . ", null";
