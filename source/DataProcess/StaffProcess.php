@@ -34,6 +34,7 @@ class StaffProcess
 
         $databaseProcess->insertValues("staff", $staff->getArray());
         $databaseProcess->closeConnect();
+
     }
 
 
@@ -70,7 +71,7 @@ class StaffProcess
     public function updateStaffByEntity(Staff $staff)
     {
         $databaseProcess = new DatabaseProcess();
-        $result =$databaseProcess->updateByArray("staff", $staff->getArray());
+        $result = $databaseProcess->updateByArray("staff", $staff->getArray());
         $databaseProcess->closeConnect();
         return $result;
     }
@@ -141,6 +142,7 @@ class StaffProcess
 
         $result = $databaseProcess->searchByField("staff_project", "StaffId", $staffId);
         $projects = array();
+
         for ($i = 0; $i < count($result, 0); $i++) {
             $arr = $databaseProcess->searchByField("project", "ProjectId", $result[$i]["ProjectId"]);
             $projects[] = new Project(
@@ -150,6 +152,7 @@ class StaffProcess
                 $arr[0]["ProjectRemark"]
             );
         }
+
         $databaseProcess->closeConnect();
         return $projects;
     }
@@ -274,5 +277,44 @@ class StaffProcess
         return $result;
     }
 
+
+    /**
+     * 建立和项目的联系
+     * @param string $staffId
+     * @param string $projectId
+     * @return bool|mysqli_result
+     */
+    public function connectToProject(string $staffId, string $projectId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "StaffId" => $staffId,
+            "ProjectId" => $projectId,
+            "ProjectStatus" => 1  //项目新建默认是1
+        );
+        $result = $databaseProcess->insertValues("staff_project", $arr);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
+
+
+    /**
+     * 建立和任务的联系
+     * @param string $staffId
+     * @param string $taskId
+     * @return bool|mysqli_result
+     */
+    public function connectToTask(string $staffId, string $taskId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "StaffId" => $staffId,
+            "TaskId" => $taskId,
+            "TaskStatus" => 1  //项目新建默认是1
+        );
+        $result = $databaseProcess->insertValues("staff_task", $arr);
+        $databaseProcess->closeConnect();
+        return $result;
+    }
 
 }
