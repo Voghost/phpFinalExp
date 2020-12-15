@@ -29,17 +29,23 @@ class DatabaseProcess
     /**
      * 查找某个表, 符合某个字段的内容(数组)
      * table: 表名, $field: 字段名, $value:字段值
-     * @param $table
-     * @param $field
-     * @param $value
+     * @param string $table
+     * @param string $field
+     * @param mixed $value
      * @return array 返回二维数组
      */
-    public function searchByField(string $table, string $field, string $value): array
+    public function searchByField(string $table, string $field, $value): array
     {
-        $sql = "select * from  {$table} where ${field} = '{$value}'";
+        //tmp 占位符，判断是否要用引号
+        $tmp = (is_numeric($value)) ? "" : "'";
+        if ($value == null) {
+            $sql = "select * from  {$table} where ${field} is null";
+        } else {
+            $sql = "select * from  {$table} where ${field} = {$tmp}{$value}{$tmp}";
+        }
         $result = mysqli_query($this->link, $sql);
         $this->tryAndShowError($result);
-        return mysqli_fetch_all($result,MYSQLI_BOTH);
+        return mysqli_fetch_all($result, MYSQLI_BOTH);
     }
 
 
@@ -70,28 +76,52 @@ class DatabaseProcess
      * 更新表， 通过数组(键值对)批量修改
      * @param string $table 表名
      * @param array $arr 数组(键值对)
+     * @param array|null $conditions //条件 <可选>
      * @return bool|mysqli_result 返回是否更新成功
      */
-    public function updateByArray(string $table, array $arr)
+    public function updateByArray(string $table, array $arr, array $conditions = null)
     {
 
         $id = key($arr);
         $idValue = current($arr);
 
-        $sql = "update {$table} set {$id} = '$idValue'";
+        $tmp = "'";
+        //如果是数字类型或为空值    ，不需要单引号
+        if (is_numeric(current($arr)) || (current($arr)) == null) {
+            $tmp = "";
+        }
+
+        $sql = "update {$table} set {$id} = {$tmp}{$idValue}{$tmp} ";
         next($arr);
 
 
         for ($i = 1; $i < count($arr); $i++) {
+            $tmp = "'";
+
+            //如果是数字类型或为空值    ，不需要单引号
+            if (is_numeric(current($arr)) || (current($arr)) == null) {
+                $tmp = "";
+            }
+
+            //如果为空值
             if (current($arr) == null) {
                 $sql = $sql . ", " . key($arr) . "= null ";
             } else {
-                $sql = $sql . ", " . key($arr) . "= '" . current($arr) . "' ";
-
+                $sql = $sql . ", " . key($arr) . "= {$tmp}" . current($arr) . "{$tmp} ";
             }
             next($arr);
         }
-        $sql = $sql . "where {$id} = '{$idValue}'";
+
+        if ($conditions == null) {
+            $sql = $sql . "where {$id} = '{$idValue}'";
+        } else {
+            $sql = $sql . "where " . key($conditions) . "= '" . current($conditions) . "' ";
+            next($conditions);
+            for ($i = 1; $i < count($conditions); $i++) {
+                $sql = $sql . "and " . key($conditions) . "= '" . current($conditions) . "'";
+                next($conditions);
+            }
+        }
 
         $result = mysqli_query($this->link, $sql);
         $this->tryAndShowError($result); //检测是否出错
@@ -140,16 +170,23 @@ class DatabaseProcess
 
 
     /**
-     * 通过键值对插入数据到数据库
+     * 通过(键值对)插入数据到数据库
      * @param $table
      * @param array $values
      * @return bool|mysqli_result
      */
     public function insertValues($table, array $values)
     {
+        //如果是数字类型或为空值    ，不需要单引号
+        $tmp = "'";
+        if (is_numeric(current($values)) || (current($values)) == null) {
+            $tmp = "";
+        }
+
+
         $num = count($values);
         $key = key($values); //获取第数组第0的key值
-        $value = "'" . current($values) . "'"; //获取第数组第0的value值
+        $value = "{$tmp}" . current($values) . "{$tmp}"; //获取第数组第0的value值
         next($values); //指针转向下一个数组
 
         for ($i = 1; $i < $num; $i++) {
@@ -157,7 +194,7 @@ class DatabaseProcess
             if (current($values) == null) {
                 $value = $value . ", null";
             } else {
-                $value = $value . ", '" . current($values) . "'";
+                $value = $value . ", {$tmp}" . current($values) . "{$tmp}";
             }
             next($values);
         }
@@ -207,7 +244,8 @@ class DatabaseProcess
         } catch (mysqli_sql_exception $e) {
             echo "<div style='color: red; font-size: 12px; font-weight: bolder; margin: 0'>";
             echo "<pre/>";
-            echo $e;
+            echo $e . "<br/>";
+            echo mysqli_error($this->link);
             echo "</div>";
         }
     }
