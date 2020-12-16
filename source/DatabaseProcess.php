@@ -50,6 +50,33 @@ class DatabaseProcess
 
 
     /**
+     * 查找某个表, 符合数组的内容(数组)
+     * table: 表名, $field: 字段名, $value:字段值
+     * @param string $table
+     * @param string $field
+     * @param mixed $value
+     * @return array 返回二维数组
+     */
+    public function searchByArray(string $table, $arr): array
+    {
+        $tmp = is_numeric(current($arr)) ? "" : "'";
+        $sql = "select * from {$table} where ";
+        $sql = $sql . key($arr) . "= {$tmp}" . current($arr) . "{$tmp}";
+        next($arr);
+
+        for ($i = 1; $i < count($arr); $i++) {
+            $tmp = is_numeric(current($arr)) ? "" : "'";
+            $sql = $sql . "and ".key($arr)."= {$tmp}".current($arr)."{$tmp}";
+            next($arr);
+        }
+        $result = mysqli_query($this->link,$sql);
+        $this->tryAndShowError($result);
+
+        return $result;
+
+    }
+
+    /**
      * 更新表， 通过某个字段
      * @param string $table 表名
      * @param string $field 需要修改的字段名
@@ -141,6 +168,31 @@ class DatabaseProcess
     {
         $sql = "delete from ${table} where $field = '$value'";
         $result = mysqli_query($this->link, $sql);
+    }
+
+    /**
+     * 删除记录， 通过某个键值对
+     * @param string $table
+     * @param array $arr
+     * @return bool|mysqli_result
+     */
+    public function deleteByValues(string $table, array $arr)
+    {
+        $tmp = is_numeric(current($arr)) ? "" : "'";
+        $sql = "delete from {$table} where ";
+        $sql = $sql . key($arr) . "= {$tmp}" . current($arr) . "{$tmp}";
+        next($arr);
+
+        for ($i = 1; $i < count($arr); $i++) {
+            $tmp = is_numeric(current($arr)) ? "" : "'";
+            $sql = $sql . "and ".key($arr)."= {$tmp}".current($arr)."{$tmp}";
+            next($arr);
+        }
+        $result = mysqli_query($this->link,$sql);
+        $this->tryAndShowError($result);
+
+        return $result;
+
     }
 
 
