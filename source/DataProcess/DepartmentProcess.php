@@ -1,10 +1,10 @@
 <?php
 $dir = dirname(__FILE__);
-require_once($dir."/../../source/DatabaseProcess.php");
-require_once($dir."/../../source/Entity/Staff.php");
-require_once($dir."/../../source/Entity/Department.php");
-require_once($dir."/../../source/Entity/Project.php");
-require_once($dir."/../../source/Entity/Task.php");
+require_once($dir . "/../../source/DatabaseProcess.php");
+require_once($dir . "/../../source/Entity/Staff.php");
+require_once($dir . "/../../source/Entity/Department.php");
+require_once($dir . "/../../source/Entity/Project.php");
+require_once($dir . "/../../source/Entity/Task.php");
 
 
 class DepartmentProcess
@@ -31,7 +31,7 @@ class DepartmentProcess
 
         $department->setDepartmentId($maxStaffId);
 
-        $result =$databaseProcess->insertValues("department", $department->getArray());
+        $result = $databaseProcess->insertValues("department", $department->getArray());
         $databaseProcess->closeConnect();
         return $result;
     }
@@ -63,7 +63,7 @@ class DepartmentProcess
 
 
     /**
-     * 通过Staff对象实体更新
+     * 通过Department对象实体更新
      * @param Department $department
      * @return bool|mysqli_result
      */
@@ -88,16 +88,40 @@ class DepartmentProcess
         $result = $databaseProcess->searchByField("department", $field, $value);
         $databaseProcess->closeConnect();
 
-        $staffs = array();
+        $departments = array();
         for ($i = 0; $i < count($result, 0); $i++) {
-            $staffs[] = new Department(
+            $departments[] = new Department(
                 $result[$i]["DepartmentId"],
                 $result[$i]["DepartmentName"],
                 $result[$i]["DepartmentAddress"]
             );
         }
-        return $staffs;
+        return $departments;
     }
+
+
+    /**
+     * 通过部门的某些字段查找部门(们)的具体信息
+     * @param array $arr
+     * @return array
+     */
+    public function searchDepartmentByEntity(array $arr): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByArray($arr);
+        $databaseProcess->closeConnect();
+
+        $departments = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $departments[] = new Department(
+                $result[$i]["DepartmentId"],
+                $result[$i]["DepartmentName"],
+                $result[$i]["DepartmentAddress"]
+            );
+        }
+        return $departments;
+    }
+
 
 
     ///////////////////////////////////////////////////////////////
@@ -105,7 +129,7 @@ class DepartmentProcess
     ///////////////////////////////////////////////////////////////
 
     /**
-     * 通过部门id查找员工所属部门
+     * 通过部门id查找部门拥有的员工
      * 多对多: [员工] <--> [员工-部门] <--> [部门]
      * @param string $departmentId
      * @return array 返回员工对象数组
@@ -130,13 +154,14 @@ class DepartmentProcess
         return $staffs;
     }
 
+
     /**
      * 建立和员工的联系
      * @param string $departmentId
      * @param string $staffId
      * @return bool|mysqli_result
      */
-    public function connectToDepartment(string $departmentId, string $staffId)
+    public function connectToStaff(string $departmentId, string $staffId)
     {
         $databaseProcess = new DatabaseProcess();
         $arr = array(
@@ -146,6 +171,23 @@ class DepartmentProcess
         $result = $databaseProcess->insertValues("staff_department", $arr);
         $databaseProcess->closeConnect();
         return $result;
+    }
+
+
+    /**
+     * @param string $departmentId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToStaff(string $departmentId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "DepartmentId" => $departmentId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_department", $arr);
+
     }
 
 
