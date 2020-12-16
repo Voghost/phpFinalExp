@@ -90,8 +90,8 @@
                     <a href="javascript:;">部门管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li class="active"><a href="系统管理/config.html" target="content">管理部门</a></li>
-                            <li><a href="系统管理/admin_music.html" target="content">新建部门</a></li>
+                            <li class="active"><a href="static/Department/DepartmentManager.php" target="content">管理部门</a></li>
+                            <li><a href="static/Department/NewDepartment.php" target="content">新建部门</a></li>
                         </ul>
                     </div>
                 </li>
@@ -146,7 +146,7 @@
 
         <!-- 右侧内容展示部分 -->
         <div class="public-ifame-content">
-            <iframe name="content" src="main.php" frameborder="0" id="mainframe" scrolling="yes" marginheight="0" marginwidth="0" width="100%" style="height: 700px;"></iframe>
+            <iframe name="content" src="static/main.php" frameborder="0" id="mainframe" scrolling="yes" marginheight="0" marginwidth="0" width="100%" style="height: 700px;"></iframe>
         </div>
 
     </div>
