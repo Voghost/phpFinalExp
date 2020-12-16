@@ -93,6 +93,29 @@ class ProjectProcess
         return $projects;
     }
 
+    /**
+     * 通过项目的某些字段查找项目(们)的具体信息
+     * @param array $arr
+     * @return array
+     */
+    public function searchProjectByEntity(array $arr): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByArray($arr);
+        $databaseProcess->closeConnect();
+
+        $projects = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $projects[] = new Project(
+                $result[$i]["ProjectId"],
+                $result[$i]["ProjectName"],
+                $result[$i]["ProjectPathId"],
+                $result[$i]["ProjectRemark"]
+            );
+        }
+        return $projects;
+    }
+
     ///////////////////////////////////////////////////////////////
     /////////////////////      (特有)扩展功能       /////////////////
     ///////////////////////////////////////////////////////////////
@@ -139,5 +162,22 @@ class ProjectProcess
         $result = $databaseProcess->insertValues("staff_project", $arr);
         $databaseProcess->closeConnect();
         return $result;
+    }
+
+
+    /**
+     * @param string $projectId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToStaff(string $projectId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "ProjectId" => $projectId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_project", $arr);
+
     }
 }

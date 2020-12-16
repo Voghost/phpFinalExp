@@ -91,5 +91,26 @@ class FolderProcess
         return $folders;
     }
 
+    /**
+     * 通过文件的某些字段查找文件(们)的具体信息
+     * @param array $arr
+     * @return array
+     */
+    public function searchFolderByEntity(array $arr): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByArray($arr);
+        $databaseProcess->closeConnect();
+
+        $folders = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $folders[] = new Folder(
+                $result[$i]["FolderId"],
+                $result[$i]["FolderPath"],
+                $result[$i]["FolderRemark"]
+            );
+        }
+        return $folders;
+    }
 
 }

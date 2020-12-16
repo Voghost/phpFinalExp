@@ -102,6 +102,30 @@ class StaffProcess
         return $staffs;
     }
 
+    /**
+     * 通过员工的某些字段查找员工(们)的具体信息
+     * @param array $arr
+     * @return array
+     */
+    public function searchStaffByEntity(array $arr): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByArray($arr);
+        $databaseProcess->closeConnect();
+
+        $staffs = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $staffs[] = new Staff(
+                $result[$i]["StaffId"],
+                $result[$i]["StaffName"],
+                $result[$i]["StaffName"],
+                $result[$i]["StaffFileId"],
+                $result[$i]["StaffPassword"]
+            );
+        }
+        return staffs;
+    }
+
 
 
     ///////////////////////////////////////////////////////////////
@@ -319,4 +343,53 @@ class StaffProcess
         return $result;
     }
 
+
+
+    /**
+     * @param string $departmentId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToDepartment(string $departmentId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "DepartmentId" => $departmentId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_department", $arr);
+
+    }
+
+    /**
+     * @param string $projectId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToProject(string $projectId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "DepartmentId" => $projectId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_project", $arr);
+
+    }
+
+    /**
+     * @param string $taskId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToTask(string $taskId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "TaskId" => $taskId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_task", $arr);
+
+    }
 }

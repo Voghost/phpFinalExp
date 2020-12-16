@@ -92,6 +92,30 @@ class TaskProcess
         return $tasks;
     }
 
+    /**
+     * 通过任务的某些字段查找任务(们)的具体信息
+     * @param array $arr
+     * @return array
+     */
+    public function searchTaskByEntity(array $arr): array
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result = $databaseProcess->searchByArray($arr);
+        $databaseProcess->closeConnect();
+
+        $tasks = array();
+        for ($i = 0; $i < count($result, 0); $i++) {
+            $tasks[] = new Task(
+                $result[$i]["TaskId"],
+                $result[$i]["TaskName"],
+                $result[$i]["TaskRemark"],
+                $result[$i]["TaskStartDate"],
+                $result[$i]["TaskEndDate"]
+            );
+        }
+        return $tasks;
+    }
+
     ///////////////////////////////////////////////////////////////
     /////////////////////      (特有)扩展功能       /////////////////
     ///////////////////////////////////////////////////////////////
@@ -138,5 +162,21 @@ class TaskProcess
         $result = $databaseProcess->insertValues("staff_task", $arr);
         $databaseProcess->closeConnect();
         return $result;
+    }
+
+    /**
+     * @param string $taskId
+     * @param string $staffId
+     * @return bool|mysqli_result
+     */
+    public function disconnectToStaff(string $taskId, string $staffId)
+    {
+        $databaseProcess = new DatabaseProcess();
+        $arr = array(
+            "TaskId" => $taskId,
+            "StaffId" => $staffId
+        );
+        return $databaseProcess->deleteByValues("staff_task", $arr);
+
     }
 }
