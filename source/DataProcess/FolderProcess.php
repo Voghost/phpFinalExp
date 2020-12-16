@@ -1,9 +1,11 @@
 <?php
-require_once("source/DatabaseProcess.php");
-require_once("source/Entity/Staff.php");
-require_once("source/Entity/Department.php");
-require_once("source/Entity/Project.php");
-require_once("source/Entity/Task.php");
+
+$dir = dirname(__FILE__);
+require_once($dir."/../../source/DatabaseProcess.php");
+require_once($dir."/../../source/Entity/Staff.php");
+require_once($dir."/../../source/Entity/Department.php");
+require_once($dir."/../../source/Entity/Project.php");
+require_once($dir."/../../source/Entity/Task.php");
 
 class FolderProcess
 {

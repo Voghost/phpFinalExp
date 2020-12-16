@@ -1,9 +1,10 @@
 <?php
-require_once("source/DatabaseProcess.php");
-require_once("source/Entity/Staff.php");
-require_once("source/Entity/Department.php");
-require_once("source/Entity/Project.php");
-require_once("source/Entity/Task.php");
+$dir = dirname(__FILE__);
+require_once($dir."/../../source/DatabaseProcess.php");
+require_once($dir."/../../source/Entity/Staff.php");
+require_once($dir."/../../source/Entity/Department.php");
+require_once($dir."/../../source/Entity/Project.php");
+require_once($dir."/../../source/Entity/Task.php");
 
 
 class DepartmentProcess
@@ -16,6 +17,7 @@ class DepartmentProcess
     /**
      * 新建一条部门数据 (通过Department对象)
      * @param Department $department
+     * @return bool|mysqli_result
      */
     public function insertDepartment(Department $department)
     {
@@ -24,13 +26,14 @@ class DepartmentProcess
 
         //字符串自加1
         $num = (int)substr($maxDepartmentId, 1);
-        $num = $num + 100000001;
+        $num = $num + 1001;
         $maxStaffId = "D" . substr($num, 1); //S -> staff 表示员工
 
         $department->setDepartmentId($maxStaffId);
 
-        $databaseProcess->insertValues("staff", $department->getArray());
+        $result =$databaseProcess->insertValues("department", $department->getArray());
         $databaseProcess->closeConnect();
+        return $result;
     }
 
 
