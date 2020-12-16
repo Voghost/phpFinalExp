@@ -44,8 +44,7 @@
 
 <?php
 //判断是否要进行表单处理
-$isProcess = $_POST["isProcess"];
-if (!assert($isProcess) || $isProcess != "true") {
+if (!isset($_POST['isProcess'])) {
     die();
 }
 

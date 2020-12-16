@@ -4,14 +4,15 @@
 $dir = dirname(__FILE__);
 require_once($dir . "/../../source/DataProcess/DepartmentProcess.php");
 require_once($dir . "/../../source/Entity/Department.php");
+
 //判断是否要进行表单处理
-$isProcess = $_POST["isProcess"];
 $departmentProcess = new DepartmentProcess();
-if (assert($isProcess) && $isProcess == "true") {
-    $departmentId = $_POST['DepartmentId'];
-    $departmentProcess->deleteDepartmentById($departmentId);
-    echo "<script>window.location.href='DepartmentManager.php'</script>";
+if(isset($_POST["submit"])){
+        $departmentId = $_POST['DepartmentId'];
+        $departmentProcess->deleteDepartmentById($departmentId);
+    //    echo "<script>window.location.href='DepartmentManager.php'</script>";
 }
+
 
 ?>
 <!doctype html>
@@ -79,7 +80,7 @@ if (assert($isProcess) && $isProcess == "true") {
                         <form action=\"DepartmentManager.php\" method='post' style=\"display: inline;\">
                             <input type='hidden' name='isProcess' value='true'>
                             <input type='hidden' name='DepartmentId' value='{$departments[$i]->getDepartmentId()}'>
-                            <button class=\"sub-btn btn-red\" onclick='isDeleteDepartment()'  type='submit'>删除部门</button>
+                            <button name=\"submit\" class=\"sub-btn btn-red\" onclick='isDeleteDepartment()'  type='submit'>删除部门</button>
                         </form>
                     </td>
                     ";

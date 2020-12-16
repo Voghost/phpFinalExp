@@ -6,21 +6,25 @@ require_once($dir . "/../../source/Entity/Department.php");
 $departmentProcess = new DepartmentProcess();
 
 
-$deleteOrInsert = $_POST['deleteOrInsert'];
-$requestStaffId = $_POST["StaffId"];  //要处理的员工id
-$requestDepartmentId = $_POST["DepartmentId"]; //要处理的部门id
+
+
 
 //如果存在
-if ($deleteOrInsert != null) {
-    if ($deleteOrInsert == "insert") {
-        $departmentProcess->connectToStaff($requestDepartmentId, $requestStaffId);
-    } elseif ($deleteOrInsert == "delete") {
-        $departmentProcess->disconnectToStaff($requestDepartmentId, $requestStaffId);
-    }
-    echo "
+if(isset($_POST["submit"])){
+    $deleteOrInsert = $_POST['deleteOrInsert'];
+    $requestStaffId = $_POST["StaffId"];  //要处理的员工id
+    $requestDepartmentId = $_POST["DepartmentId"]; //要处理的部门id
+    if ($deleteOrInsert != null) {
+        if ($deleteOrInsert == "insert") {
+            $departmentProcess->connectToStaff($requestDepartmentId, $requestStaffId);
+        } elseif ($deleteOrInsert == "delete") {
+            $departmentProcess->disconnectToStaff($requestDepartmentId, $requestStaffId);
+        }
+        echo "
         <script>window.location.href = 'MangerDepartStaff.php?DepartmentId={$requestDepartmentId}';</script>";
-
+    }
 }
+
 
 ?>
 
@@ -59,11 +63,12 @@ if ($deleteOrInsert != null) {
                 </tr>
 
                 <?php
-                $departmentId = $_POST["DepartmentId"];
-                //如果post没有数据，尝试get
-                if ($departmentId == null) {
-                    $departmentId = $_GET["DepartmentId"];
-                }
+               if(isset($_POST["DepartmentId"])){
+                   $departmentId = $_POST["DepartmentId"];
+               }else{
+                   $departmentId = $_GET["DepartmentId"];
+               }
+
                 $staffs = $departmentProcess->searchStaffs($departmentId);
                 for ($i = 0; $i < count($staffs); $i++) {
                     $num = $i + 1;
@@ -79,7 +84,7 @@ if ($deleteOrInsert != null) {
                             <input type='hidden' name='deleteOrInsert' value='delete'>
                             <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
                             <input type='hidden' name='DepartmentId' value='{$departmentId}'>
-                            <button class=\"sub-btn btn-red\" type='submit'>删除员工</button>
+                            <button class=\"sub-btn btn-red\" name='submit' type='submit'>删除员工</button>
                         </form>
                         </td>
                     ";
@@ -135,7 +140,7 @@ if ($deleteOrInsert != null) {
                             <input type='hidden' name='deleteOrInsert' value='insert'>
                             <input type='hidden' name='StaffId' value='{$allStaffs[$i]->getStaffId()}'>
                             <input type='hidden' name='DepartmentId' value='$departmentId'>
-                            <button class=\"sub-btn\" type='submit'>新增员工</button>
+                            <button class=\"sub-btn\" name='submit' type='submit'>新增员工</button>
                         </form>
                         </td>
                     ";

@@ -1,13 +1,15 @@
 <?php
+
+
 //判断是否要进行表单处理
-$isProcess = $_POST["isProcess"];
+
 $dir = dirname(__FILE__);
 
 require_once($dir . "/../../source/DataProcess/DepartmentProcess.php");
 require_once($dir . "/../../source/Entity/Department.php");
 $departmentProcess = new DepartmentProcess(); //新部门处理对象
 
-if ($isProcess == "true") {
+if(isset($_POST["submit"])){
     $department = new Department(null, null, null);
 
     $department->setDepartmentId($_POST["DepartmentId"]);
@@ -17,8 +19,8 @@ if ($isProcess == "true") {
 
 //跳转页面
     echo "<script>window.location.href='DepartmentManager.php'</script>";
-
 }
+
 
 ?>
 <!doctype html>
@@ -58,9 +60,9 @@ if ($isProcess == "true") {
                 </div>
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->
-                    <input type="hidden" name="isProcess" value="true"/>
+<!--                    <input type="hidden" name="isProcess" value="true"/>-->
                     <input type="hidden" name="DepartmentId" value="<?php echo $departmentId?>">
-                    <input type="submit" class="sub-btn" value="提  交"/>
+                    <input type="submit" name="submit" class="sub-btn" value="提  交"/>
                     <input type="reset" class="sub-btn" value="重  置"/>
                 </div>
             </form>
