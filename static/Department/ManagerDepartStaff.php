@@ -21,7 +21,7 @@ if(isset($_POST["submit"])){
             $departmentProcess->disconnectToStaff($requestDepartmentId, $requestStaffId);
         }
         echo "
-        <script>window.location.href = 'MangerDepartStaff.php?DepartmentId={$requestDepartmentId}';</script>";
+        <script>window.location.href = 'ManagerDepartStaff.php?DepartmentId={$requestDepartmentId}';</script>";
     }
 }
 
@@ -35,7 +35,7 @@ if(isset($_POST["submit"])){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MangerDepartStaff</title>
+    <title>ManagerDepartStaff</title>
     <link rel="stylesheet" href="../../css/content.css">
     <link rel="stylesheet" href="../../css/reset.css">
 </head>
@@ -80,7 +80,7 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='delete'>
                             <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
                             <input type='hidden' name='DepartmentId' value='{$departmentId}'>
@@ -136,7 +136,7 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='insert'>
                             <input type='hidden' name='StaffId' value='{$allStaffs[$i]->getStaffId()}'>
                             <input type='hidden' name='DepartmentId' value='$departmentId'>
