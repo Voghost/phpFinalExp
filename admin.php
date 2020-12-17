@@ -99,8 +99,8 @@
                     <a href="javascript:;">项目管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li><a href="信息管理/article_manage.html" target="content">管理项目</a></li>
-                            <li><a href="信息管理/cate_manage.html" target="content">新建项目</a></li>
+                            <li class="active"><a href="static/Project/ProjectManager.php" target="content">管理项目</a></li>
+                            <li><a href="static/Project/NewProject.php" target="content">新建项目</a></li>
                         </ul>
                     </div>
                 </li>
@@ -108,8 +108,8 @@
                     <a href="javascript:;">任务管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li><a href="旅游管理/lytc_manage.html" target="content">管理任务</a></li>
-                            <li><a href="#" target="content">新建任务</a></li>
+                            <li class="active"><a href="static/Task/TaskManager.php" target="content">管理任务</a></li>
+                            <li><a href="static/Task/NewTask.php" target="content">新建任务</a></li>
                         </ul>
                     </div>
                 </li>
@@ -117,8 +117,8 @@
                     <a href="javascript:;">员工管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li><a href="#" target="content">管理员工</a></li>
-                            <li><a href="#" target="content">新建员工</a></li>
+                            <li class="active"><a href="static/Staff/StaffManager.php" target="content">管理员工</a></li>
+                            <li><a href="static/Staff/NewStaff.php" target="content">新建员工</a></li>
                         </ul>
                     </div>
                 </li>
@@ -126,8 +126,8 @@
                     <a href="javascript:;">文件管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li><a href="#" target="content">管理文件夹</a></li>
-                            <li><a href="#" target="content">新建文件夹</a></li>
+                            <li class="active"><a href="static/Folder/FolderManager.php" target="content">管理文件夹</a></li>
+                            <li><a href="static/Folder/NewFolder.php" target="content">新建文件夹</a></li>
                         </ul>
                     </div>
                 </li>
@@ -135,9 +135,9 @@
                     <a href="javascript:;">查看信息</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li><a href="#" target="content">你的部门</a></li>
-                            <li><a href="#" target="content">你的任务</a></li>
-                            <li><a href="#" target="content">你的文件</a></li>
+                            <li><a href="static/Department/SearchDepartments.php" target="content">你的部门</a></li>
+                            <li><a href="static/Task/SearchTask.php" target="content">你的任务</a></li>
+                            <li><a href="static/Folder/SearchFolder.php" target="content">你的文件</a></li>
                         </ul>
                     </div>
                 </li>
