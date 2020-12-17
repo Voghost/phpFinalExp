@@ -10,7 +10,7 @@ $taskProcess = new TaskProcess();
 if(isset($_POST["submit"])){
     $taskId = $_POST['TaskId'];
     $taskProcess->deleteTaskById($taskId);
-    //    echo "<script>window.location.href='DepartmentManager.php'</script>";
+//        echo "<script>window.location.href='DepartmentManager.php'</script>";
 }
 
 
@@ -48,7 +48,7 @@ if(isset($_POST["submit"])){
                 <tr>
                     <th style="width: 10%">序号</th>
                     <th style="width: 10%">任务编号</th>
-                    <th style="width: 10%">任务名字</th>
+                    <th style="width: 10%">任务名称</th>
                     <th style="width: 10%">任务描述</th>
                     <th style="width: 10%">任务开始时间</th>
                     <th style="width: 10%">任务结束时间</th>

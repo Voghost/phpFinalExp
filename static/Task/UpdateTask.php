@@ -10,12 +10,13 @@ require_once($dir . "/../../source/Entity/Task.php");
 $taskProcess = new TaskProcess(); //新任务处理对象
 
 if(isset($_POST["submit"])){
-    $task = new Task(null, null, null);
+    $task = new Task(null, null, null,null,null);
 
     $task->setTaskId($_POST["TaskId"]);
     $task->setTaskName($_POST['TaskName']);
     $task->setTaskRemark($_POST["TaskRemark"]);
     $task->setTaskStartDate($_POST["TaskStartDate"]);
+    $task->setTaskEndDate($_POST["TaskEndDate"]);
     $taskProcess->updateTaskByEntity($task);
 
 //跳转页面
@@ -58,6 +59,14 @@ if(isset($_POST["submit"])){
                 <div class="form-group">
                     <label for="">任务描述</label>
                     <input class="form-input-txt" type="text" name="TaskRemark" value="<?php echo $tasks[0]->getTaskRemark() ?>"/>
+                </div>
+                <div class="form-group">
+                    <label for="">开始时间</label>
+                    <input class="form-input-txt" type="text" name="TaskStartDate" value="<?php echo $tasks[0]->getTaskStartDate() ?>"/>
+                </div>
+                <div class="form-group">
+                    <label for="">结束时间</label>
+                    <input class="form-input-txt" type="text" name="TaskEndDate" value="<?php echo $tasks[0]->getTaskEndDate() ?>"/>
                 </div>
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->

@@ -10,16 +10,16 @@ require_once($dir . "/../../source/Entity/Project.php");
 $projectProcess = new ProjectProcess(); //新项目处理对象
 
 if(isset($_POST["submit"])){
-    $project = new Project(null, null, null);
+    $project = new Project(null, null, null,null);
 
     $project->setProjectId($_POST["ProjectId"]);
     $project->setProjectName($_POST['ProjectName']);
     $project->setProjectPathId($_POST["ProjectPathId"]);
     $project->setProjectRemark($_POST["ProjectRemark"]);
-    $projectProcess->updateDepartmentByEntity($project);
+    $projectProcess->updateProjectByEntity($project);
 
 //跳转页面
-    echo "<script>window.location.href='ProjectManager.php'</script>";
+//    echo "<script>window.location.href='ProjectManager.php'</script>";
 }
 
 
@@ -54,10 +54,6 @@ if(isset($_POST["submit"])){
                 <div class="form-group">
                     <label for="">项目名称</label>
                     <input class="form-input-txt" type="text" name="ProjectName"  value='<?php echo $projects[0]->getProjectName() ?>'/>
-                </div>
-                <div class="form-group">
-                    <label for="">项目路径</label>
-                    <input class="form-input-txt" type="text" name="ProjectPathId" value="<?php echo $projects[0]->getProjectPathId() ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="">项目描述</label>

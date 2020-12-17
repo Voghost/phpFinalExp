@@ -5,17 +5,17 @@
 
 $dir = dirname(__FILE__);
 
-require_once($dir . "/../../source/DataProcess/StaffProcess.php.php");
+require_once($dir . "/../../source/DataProcess/StaffProcess.php");
 require_once($dir . "/../../source/Entity/Staff.php");
 $staffProcess = new StaffProcess(); //新员工处理对象
 
 if(isset($_POST["submit"])){
-    $staff = new staff(null, null, null);
+    $staff = new staff(null, null, null,null,null);
 
     $staff->setStaffId($_POST["StaffId"]);
     $staff->setStaffName($_POST['StaffName']);
     $staff->setStaffPhone($_POST["StaffPhone"]);
-    $staffProcess->updateFoldertByEntity($staff);
+    $staffProcess->updateStaffByEntity($staff);
 
 //跳转页面
     echo "<script>window.location.href='StaffManager.php'</script>";

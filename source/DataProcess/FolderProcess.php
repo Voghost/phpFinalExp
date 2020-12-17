@@ -20,7 +20,7 @@ class FolderProcess
 
         //字符串自加1
         $num = (int)substr($maxFolderId, 1);
-        $num = $num + 100001;
+        $num = $num + 100000001;
         $maxFolderId = "F" . substr($num, 1); //F -> folder 表示文件
 
         $folder->setFolderId($maxFolderId);

@@ -22,16 +22,20 @@
         <div class="public-content-cont">
             <form action="NewTask.php" method="post">
                 <div class="form-group">
-                    <label for="">项目名称</label>
+                    <label for="">任务名称</label>
                     <input class="form-input-txt" type="text" name="TaskName" value=""/>
                 </div>
                 <div class="form-group">
-                    <label for="">项目描述</label>
+                    <label for="">任务描述</label>
                     <input class="form-input-txt" type="text" name="TaskRemark" value=""/>
                 </div>
                 <div class="form-group">
-                    <label for="">项目开始时间</label>
+                    <label for="">开始时间</label>
                     <input class="form-input-txt" type="text" name="TaskStartDate" value=""/>
+                </div>
+                <div class="form-group">
+                    <label for="">结束时间</label>
+                    <input class="form-input-txt" type="text" name="TaskEndDate" value=""/>
                 </div>
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->
@@ -56,12 +60,13 @@ $dir = dirname(__FILE__);
 
 require_once($dir."/../../source/DataProcess/TaskProcess.php");
 require_once($dir."/../../source/Entity/Task.php");
-$taskProcess = new TaskProcess(); //新部门处理对象
-$task = new Task(null,null,null);
+$taskProcess = new TaskProcess(); //新任务处理对象
+$task = new Task(null,null,null,null,null);
 
 $task->setTaskName($_POST['TaskName']);
-$task->setDepartmentAddress($_POST["TaskRemark"]);
+$task->setTaskRemark($_POST["TaskRemark"]);
 $task->setTaskStartDate($_POST["TaskStartDate"]);
+$task->setTaskEndDate($_POST["TaskEndDate"]);
 $taskProcess->insertTask($task);
 
 //跳转页面

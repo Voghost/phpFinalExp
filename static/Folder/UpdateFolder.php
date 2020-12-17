@@ -51,10 +51,6 @@ if(isset($_POST["submit"])){
                 $folders = $folderProcess->searchFolder("FolderId",$folderId);
                 ?>
                 <div class="form-group">
-                    <label for="">文件路径</label>
-                    <input class="form-input-txt" type="text" name="FolderPath"  value='<?php echo $folders[0]->getFolderPath() ?>'/>
-                </div>
-                <div class="form-group">
                     <label for="">文件描述</label>
                     <input class="form-input-txt" type="text" name="FolderRemark" value="<?php echo $folders[0]->getFolderRemark() ?>"/>
                 </div>

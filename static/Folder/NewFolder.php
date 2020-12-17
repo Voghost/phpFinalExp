@@ -50,13 +50,13 @@ if (!isset($_POST['isProcess'])) {
 
 $dir = dirname(__FILE__);
 
-require_once($dir."/../../source/DataProcess/DepartmentProcess.php");
-require_once($dir."/../../source/Entity/Department.php");
+require_once($dir."/../../source/DataProcess/FolderProcess.php");
+require_once($dir."/../../source/Entity/Folder.php");
 $folderProcess = new FolderProcess(); //新文件处理对象
 $folder = new Folder(null,null,null);
 
-$folder->setFolderPath($_POST['DepartmentName']);
-$folder->setFolderRemark($_POST["DepartmentAddress"]);
+$folder->setFolderPath($_POST['FolderPath']);
+$folder->setFolderRemark($_POST["FolderRemark"]);
 $folderProcess->insertFolder($folder);
 
 //跳转页面

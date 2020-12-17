@@ -21,14 +21,15 @@ class ProjectProcess
 
         //字符串自加1
         $num = (int)substr($maxProjectId, 1);
-        $num = $num + 100001;
+        $num = $num + 100000001;
         $maxProjectId = "P" . substr($num, 1); //P -> project 表示项目
 
         $project->setProjectId($maxProjectId);
 
-        $databaseProcess->insertValues("project", $project->getArray());
+        $result = $databaseProcess->insertValues("project", $project->getArray());
         $databaseProcess->closeConnect();
 
+        return $result;
     }
 
 
@@ -152,7 +153,7 @@ class ProjectProcess
      * @param string $staffId
      * @return bool|mysqli_result
      */
-    public function connectToProject(string $projectId, string $staffId)
+    public function connectToStaff(string $projectId, string $staffId)
     {
         $databaseProcess = new DatabaseProcess();
         $arr = array(

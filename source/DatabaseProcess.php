@@ -301,7 +301,7 @@ class DatabaseProcess
                 throw new mysqli_sql_exception(">>>>ERROR !!<<<<");
             }
         } catch (mysqli_sql_exception $e) {
-            echo "<div style='color: red; font-size: 12px; font-weight: bolder; margin: 0'>";
+            echo "<div style='color: #ff0000; font-size: 12px; font-weight: bolder; margin: 0'>";
             echo "<pre/>";
             echo $e . "<br/>";
             echo mysqli_error($this->link);

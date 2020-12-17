@@ -26,10 +26,6 @@
                     <input class="form-input-txt" type="text" name="ProjectName" value=""/>
                 </div>
                 <div class="form-group">
-                    <label for="">项目路径</label>
-                    <input class="form-input-txt" type="text" name="ProjectPathId" value=""/>
-                </div>
-                <div class="form-group">
                     <label for="">项目描述</label>
                     <input class="form-input-txt" type="text" name="ProjectRemark" value=""/>
                 </div>
@@ -57,13 +53,13 @@ $dir = dirname(__FILE__);
 require_once($dir."/../../source/DataProcess/ProjectProcess.php");
 require_once($dir."/../../source/Entity/Project.php");
 $projectProcess = new ProjectProcess(); //新项目处理对象
-$project = new Project(null,null,null);
+$project = new Project(null,null,null,null);
 
 $project->setProjectName($_POST['ProjectName']);
-$project->setProjectPathId($_POST["ProjectPathId"]);
 $project->setProjectRemark($_POST["ProjectRemark"]);
 $projectProcess->insertProject($project);
 
+
 //跳转页面
-echo "<script>window.location.href='ProjectManaager.php'</script>";
+echo "<script>window.location.href='ProjectManager.php'</script>";
 ?>

@@ -29,6 +29,10 @@
                     <label for="">员工电话</label>
                     <input class="form-input-txt" type="text" name="StaffPhone" value=""/>
                 </div>
+                <div class="form-group">
+                    <label for="">账户密码</label>
+                    <input class="form-input-txt" type="text" name="StaffPassword" value=""/>
+                </div>
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->
                     <input type="hidden" name="isProcess" value="true"/>
@@ -53,10 +57,11 @@ $dir = dirname(__FILE__);
 require_once($dir."/../../source/DataProcess/StaffProcess.php");
 require_once($dir."/../../source/Entity/Staff.php");
 $staffProcess = new StaffProcess(); //新部门处理对象
-$staff = new Staff(null,null,null);
+$staff = new Staff(null,null,null,null,null);
 
 $staff->setStaffName($_POST['StaffName']);
 $staff->setStaffPhone($_POST["StaffPhone"]);
+$staff->setStaffPassword($_POST["StaffPassword"]);
 $staffProcess->insertStaff($staff);
 
 //跳转页面

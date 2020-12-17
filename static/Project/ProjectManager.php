@@ -49,7 +49,6 @@ if(isset($_POST["submit"])){
                     <th style="width: 10%">序号</th>
                     <th style="width: 10%">项目编号</th>
                     <th style="width: 10%">项目名称</th>
-                    <th style="width: 10%">项目路径</th>
                     <th style="width: 20%">项目描述</th>
                     <th style="width: 10%">项目人数</th>
                     <th style="width: 30%;">操作</th>
@@ -66,7 +65,6 @@ if(isset($_POST["submit"])){
                     echo "<td>{$num}</td>";
                     echo "<td>{$projects[$i]->getProjectId()}</td>";
                     echo "<td>{$projects[$i]->getProjectName()}</td>";
-                    echo "<td>{$projects[$i]->getProjectPathId()}</td>";
                     echo "<td>{$projects[$i]->getProjectRemark()}</td>";
                     echo "<td>" . count($staffs) . "</td>";
                     echo "

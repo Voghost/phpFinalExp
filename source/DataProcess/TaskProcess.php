@@ -19,7 +19,7 @@ class TaskProcess
 
         //字符串自加1
         $num = (int)substr($maxTaskId, 1);
-        $num = $num + 100001;
+        $num = $num + 100000001;
         $maxTaskId = "T" . substr($num, 1); //T -> task 表示任务
 
         $task->setTaskId($maxTaskId);
@@ -152,7 +152,7 @@ class TaskProcess
      * @param string $staffId
      * @return bool|mysqli_result
      */
-    public function connectToTask(string $taskId, string $staffId)
+    public function connectToStaff(string $taskId, string $staffId)
     {
         $databaseProcess = new DatabaseProcess();
         $arr = array(

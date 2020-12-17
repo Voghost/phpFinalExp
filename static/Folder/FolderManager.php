@@ -49,7 +49,6 @@ if(isset($_POST["submit"])){
                     <th style="width: 10%">文件编号</th>
                     <th style="width: 20%">文件路径</th>
                     <th style="width: 20%">文件描述</th>
-                    <th style="width: 10%">文件数量</th>
                 </tr>
 
                 <?php
@@ -58,13 +57,12 @@ if(isset($_POST["submit"])){
                 $folders = $folderProcess->searchFolder(1, 1);
                 for ($i = 0; $i < count($folders); $i++) {
                     $num = $i + 1;
-                    $staffs = $folderProcess->searchStaffs($folders[$i]->getFolderId());
+//                    $staffs = $folderProcess->searchStaffs($folders[$i]->getFolderId());
                     echo "<tr>";
                     echo "<td>{$num}</td>";
                     echo "<td>{$folders[$i]->getFolderId()}</td>";
                     echo "<td>{$folders[$i]->getFolderPath()}</td>";
                     echo "<td>{$folders[$i]->getFolderRemark()}</td>";
-                    echo "<td>" . count($folders) . "</td>";
                     echo "</tr>";
                 }
                 ?>

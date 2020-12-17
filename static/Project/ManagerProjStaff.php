@@ -136,7 +136,7 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='insert'>
                             <input type='hidden' name='StaffId' value='{$allStaffs[$i]->getStaffId()}'>
                             <input type='hidden' name='ProjectId' value='$projectId'>
