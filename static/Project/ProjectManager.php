@@ -71,7 +71,7 @@ if(isset($_POST["submit"])){
                     echo "<td>" . count($staffs) . "</td>";
                     echo "
                     <td>
-                        <form action=\"MangerProStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='ProjectId' value='{$projects[$i]->getProjectId()}'>
                             <button class=\"sub-btn\" type='submit'>管理项目</button>
                         </form>

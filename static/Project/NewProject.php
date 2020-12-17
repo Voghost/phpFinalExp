@@ -65,5 +65,5 @@ $project->setProjectRemark($_POST["ProjectRemark"]);
 $projectProcess->insertProject($project);
 
 //跳转页面
-echo "<script>window.location.href='ProjectManager.php'</script>";
+echo "<script>window.location.href='ProjectManaager.php'</script>";
 ?>

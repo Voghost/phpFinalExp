@@ -1,9 +1,9 @@
 <?php
 $dir = dirname(__FILE__);
-require_once($dir . "/../../source/DataProcess/ProjectProcess.php");
+require_once($dir . "/../../source/DataProcess/TaskProcess.php");
 require_once($dir . "/../../source/DataProcess/StaffProcess.php");
-require_once($dir . "/../../source/Entity/Project.php");
-$projectProcess = new ProjectProcess();
+require_once($dir . "/../../source/Entity/Task.php");
+$taskProcess = new TaskProcess();
 
 
 
@@ -13,15 +13,15 @@ $projectProcess = new ProjectProcess();
 if(isset($_POST["submit"])){
     $deleteOrInsert = $_POST['deleteOrInsert'];
     $requestStaffId = $_POST["StaffId"];  //要处理的员工id
-    $requestProjectId = $_POST["ProjectId"]; //要处理的部门id
+    $requestTaskId = $_POST["TaskId"]; //要处理的任务id
     if ($deleteOrInsert != null) {
         if ($deleteOrInsert == "insert") {
-            $projectProcess->connectToStaff($requestProjectId, $requestStaffId);
+            $taskProcess->connectToStaff($requestTaskId, $requestStaffId);
         } elseif ($deleteOrInsert == "delete") {
-            $projectProcess->disconnectToStaff($requestProjectId, $requestStaffId);
+            $taskProcess->disconnectToStaff($requestTaskId, $requestStaffId);
         }
         echo "
-        <script>window.location.href = 'MangerProjStaff.php?ProjectId={$requestProjectId}';</script>";
+        <script>window.location.href = 'ManagerTaskStaff.php?TaskId={$requestTaskId}';</script>";
     }
 }
 
@@ -35,24 +35,24 @@ if(isset($_POST["submit"])){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MangerDepartStaff</title>
+    <title>ManagerDepartStaff</title>
     <link rel="stylesheet" href="../../css/content.css">
     <link rel="stylesheet" href="../../css/reset.css">
 </head>
 <body marginwidth="0" marginheight="0">
 <div class="container">
 
-    <div class="public-nav">您当前的位置：<a href="../../admin.php">管理首页</a>><a href="ProjectManger.php">项目管理</a>><a href="">员工管理</a></div>
+    <div class="public-nav">您当前的位置：<a href="../../admin.php">管理首页</a>><a href="TaskManager.php">任务管理</a>><a href="">员工管理</a></div>
 
     <div class="public-content">
         <!--公共区域标题-->
         <div class="public-content-header">
-            <h3>管理员工的项目</h3>
+            <h3>管理员工的任务</h3>
         </div>
 
         <!--公共区域内容-->
         <div class="public-content-cont">
-            <h2 style="font-size: 24px">在当前项目的员工</h2>
+            <h2 style="font-size: 24px">在当前任务的员工</h2>
             <table class="public-cont-table">
                 <tr>
                     <th style="width: 10%">序号</th>
@@ -63,13 +63,13 @@ if(isset($_POST["submit"])){
                 </tr>
 
                 <?php
-                if(isset($_POST["ProjectId"])){
-                    $projectId = $_POST["ProjectId"];
+                if(isset($_POST["TaskId"])){
+                    $taskId = $_POST["TaskId"];
                 }else{
-                    $projectId = $_GET["ProjectId"];
+                    $taskId = $_GET["TaskId"];
                 }
 
-                $staffs = $projectProcess->searchStaffs($projectId);
+                $staffs = $taskProcess->searchStaffs($taskId);
                 for ($i = 0; $i < count($staffs); $i++) {
                     $num = $i + 1;
                     echo "<tr>";
@@ -80,10 +80,10 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerTaskStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='delete'>
                             <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
-                            <input type='hidden' name='ProjectId' value='{$projectId}'>
+                            <input type='hidden' name='TaskId' value='{$taskId}'>
                             <button class=\"sub-btn btn-red\" name='submit' type='submit'>删除员工</button>
                         </form>
                         </td>
@@ -136,10 +136,10 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerTaskStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='insert'>
                             <input type='hidden' name='StaffId' value='{$allStaffs[$i]->getStaffId()}'>
-                            <input type='hidden' name='ProjectId' value='$projectId'>
+                            <input type='hidden' name='TaskId' value='$taskId'>
                             <button class=\"sub-btn\" name='submit' type='submit'>新增员工</button>
                         </form>
                         </td>
