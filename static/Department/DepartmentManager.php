@@ -69,7 +69,7 @@ if(isset($_POST["submit"])){
                     echo "<td>" . count($staffs) . "</td>";
                     echo "
                     <td>
-                        <form action=\"MangerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerDepartStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='DepartmentId' value='{$departments[$i]->getDepartmentId()}'>
                             <button class=\"sub-btn\" type='submit'>管理员工</button>
                         </form>
