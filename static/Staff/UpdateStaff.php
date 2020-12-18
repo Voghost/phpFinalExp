@@ -1,8 +1,12 @@
 <?php
 
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
 
 //判断是否要进行表单处理
-
 $dir = dirname(__FILE__);
 
 require_once($dir . "/../../source/DataProcess/StaffProcess.php");
@@ -15,6 +19,7 @@ if(isset($_POST["submit"])){
     $staff->setStaffId($_POST["StaffId"]);
     $staff->setStaffName($_POST['StaffName']);
     $staff->setStaffPhone($_POST["StaffPhone"]);
+    $staff->setStaffPassword($_POST["StaffPassword"]);
     $staffProcess->updateStaffByEntity($staff);
 
 //跳转页面
@@ -42,7 +47,7 @@ if(isset($_POST["submit"])){
 
     <div class="public-content">
         <div class="public-content-header">
-            <h3>新建员工</h3>
+            <h3>修改员工</h3>
         </div>
         <div class="public-content-cont">
             <form action="UpdateStaff.php" method="post">
@@ -61,7 +66,8 @@ if(isset($_POST["submit"])){
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->
                     <!--                    <input type="hidden" name="isProcess" value="true"/>-->
-                    <input type="hidden" name="StaffId" value="<?php echo $staffId?>">
+                    <input type="hidden" name="StaffId" value="<?php echo $staffId?>"/>
+                    <input type="hidden" name="StaffPassword" value="<?php echo $staffs[0]->getStaffPassword(); ?>"/>
                     <input type="submit" name="submit" class="sub-btn" value="提  交"/>
                     <input type="reset" class="sub-btn" value="重  置"/>
                 </div>

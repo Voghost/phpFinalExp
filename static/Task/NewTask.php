@@ -31,11 +31,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">开始时间</label>
-                    <input class="form-input-txt" type="text" name="TaskStartDate" value=""/>
+                    <input class="form-input-txt" type="date" name="TaskStartDate" value=""/>
                 </div>
                 <div class="form-group">
                     <label for="">结束时间</label>
-                    <input class="form-input-txt" type="text" name="TaskEndDate" value=""/>
+                    <input class="form-input-txt" type="date" name="TaskEndDate" value=""/>
                 </div>
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->

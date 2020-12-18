@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+$userId = $_SESSION['userId'];
+$dir = dirname(__FILE__);
+require_once($dir . "/source/DataProcess/StaffProcess.php");
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,10 +35,16 @@
 
             <!--管理人员操作-->
             <div class="public-header-admin fr">
-                <p class="admin-name">****管理员 您好！</p>
+                <p class="admin-name">
+                    <?php
+                    $staffProcess = new StaffProcess();
+                    $staffs =$staffProcess->searchStaff("StaffId",$userId);
+                    echo $staffs[0]->getStaffName()."管理员 您好！";
+                    ?>
+                </p>
                 <div class="public-header-fun fr">
                     <a href="" class="public-header-man">管理</a>
-                    <a href="" class="public-header-loginout">安全退出</a>
+                    <a href="loginAndRegister.php" class="public-header-loginout">安全退出</a>
                 </div>
             </div>
         </div>
@@ -69,7 +85,9 @@
 
                 <!--//网站访问量-->
                 <li class="ifame-item">
-                    <div class="item-warrp" style="border:none" align="right"><span>网站浏览量：15451</span></div>
+                    <div class="item-warrp" style="border:none" align="right">
+<!--                        <span>网站浏览量：15451</span>-->
+                    </div>
                 </li>
                 <div class="clearfix"></div>
             </ul>
@@ -90,7 +108,8 @@
                     <a href="javascript:;">部门管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li class="active"><a href="static/Department/DepartmentManager.php" target="content">管理部门</a></li>
+                            <li class="active"><a href="static/Department/DepartmentManager.php"
+                                                  target="content">管理部门</a></li>
                             <li><a href="static/Department/NewDepartment.php" target="content">新建部门</a></li>
                         </ul>
                     </div>
@@ -99,7 +118,8 @@
                     <a href="javascript:;">项目管理</a>
                     <div class="ifame-item-sub">
                         <ul>
-                            <li class="active"><a href="static/Project/ProjectManager.php" target="content">管理项目</a></li>
+                            <li class="active"><a href="static/Project/ProjectManager.php" target="content">管理项目</a>
+                            </li>
                             <li><a href="static/Project/NewProject.php" target="content">新建项目</a></li>
                         </ul>
                     </div>
@@ -146,7 +166,8 @@
 
         <!-- 右侧内容展示部分 -->
         <div class="public-ifame-content">
-            <iframe name="content" src="static/main.php" frameborder="0" id="mainframe" scrolling="yes" marginheight="0" marginwidth="0" width="100%" style="height: 700px;"></iframe>
+            <iframe name="content" src="static/main.php" frameborder="0" id="mainframe" scrolling="yes" marginheight="0"
+                    marginwidth="0" width="100%" style="height: 700px;"></iframe>
         </div>
 
     </div>

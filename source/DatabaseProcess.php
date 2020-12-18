@@ -287,7 +287,8 @@ class DatabaseProcess
     {
         $sql = "select MAX({$field}) from {$table}";
         $result = mysqli_query($this->link, $sql);
-        return mysqli_fetch_array($result)[0];
+        $max =mysqli_fetch_array($result);
+        return $max[0];
     }
 
     /**

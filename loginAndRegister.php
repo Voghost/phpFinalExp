@@ -188,6 +188,21 @@
             margin-bottom: 16px;
         }
     </style>
+    <?php
+    session_start();
+
+    if (isset($_GET['isLoginSuccess'])) {
+        if ($_GET['isLoginSuccess'] == 'false') {
+            echo "<script>alert(\"用户名或密码错误\")</script>";
+        }
+    }
+    if (isset($_GET['registerSuccess']) && isset($_GET["id"])) {
+        if ($_GET['registerSuccess'] == 'true') {
+            echo "<script>alert(\"注册成功 你的id为{$_GET['id']}请记住\")</script>";
+        }
+    }
+
+    ?>
 </head>
 <body>
 <h1 align="center" style="margin-top: 100px; font-size: 50px; color: white">欢迎</h1>
@@ -209,7 +224,13 @@
                 <div align="center" style="font-size: 30px; margin-top: 40px;">登录</div>
                 <div class="input-box">
                     <form action="login.php" method="post">
-                        <input class="input" type="text" placeholder="用户名" name="userName" required><br/>
+                        <?php
+                        if (isset($_GET["id"])) {
+                            echo "<input class=\"input\" type=\"text\" placeholder=\"你的用户id\" name=\"userId\" value='{$_GET['id']}' required><br/>";
+                        }else{
+                            echo "<input class=\"input\" type=\"text\" placeholder=\"你的用户id\" name=\"userId\" required><br/>";
+                        }
+                        ?>
                         <input class="input" type="password" placeholder="密码" name="password" required>
                         <button class="submit" type="submit">提交</button>
                     </form>
@@ -229,7 +250,8 @@
                                onkeyup="functionCheckPassword()" required>
                         <span id="check"></span>
                         </input>
-                        <button id="submit"  class="submit" type="submit" onclick="return clickCheckPassword()">提交</button>
+                        <button id="submit" class="submit" type="submit" onclick="return clickCheckPassword()">提交
+                        </button>
                     </form>
                 </div>
             </div>
@@ -255,15 +277,14 @@
         }
     }
 
-    function clickCheckPassword(){
+    function clickCheckPassword() {
         let password = document.getElementById("password").value;
         let rePassword = document.getElementById("checkPassword").value;
 
         if (password != rePassword) {
-           alert("两次密码不一致");
-           return false;
+            alert("两次密码不一致");
+            return false;
         }
-
     }
 </script>
 

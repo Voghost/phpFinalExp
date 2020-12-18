@@ -114,7 +114,7 @@ if(isset($_POST["submit"])){
                 for ($i = 0; $i < count($allStaffs); $i++) {
                     $num = 1;
 
-                    //过滤掉存在部门的成员
+                    //过滤掉存在任务的成员
                     $flag = true;
                     for ($j = 0; $j < count($staffs); $j++) {
                         if ($allStaffs[$i] == $staffs[$j]) {
@@ -123,7 +123,7 @@ if(isset($_POST["submit"])){
                         }
                     }
                     if ($flag == false) {
-                        //如果部门有这个用户不显示
+                        //如果任务有这个用户不显示
                         continue;
                     }
 

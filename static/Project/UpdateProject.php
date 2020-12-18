@@ -14,12 +14,12 @@ if(isset($_POST["submit"])){
 
     $project->setProjectId($_POST["ProjectId"]);
     $project->setProjectName($_POST['ProjectName']);
-    $project->setProjectPathId($_POST["ProjectPathId"]);
+//    $project->setProjectPathId($_POST["ProjectPathId"]);
     $project->setProjectRemark($_POST["ProjectRemark"]);
     $projectProcess->updateProjectByEntity($project);
 
 //跳转页面
-//    echo "<script>window.location.href='ProjectManager.php'</script>";
+    echo "<script>window.location.href='ProjectManager.php'</script>";
 }
 
 
@@ -62,7 +62,7 @@ if(isset($_POST["submit"])){
                 <div class="form-group" style="margin-left:150px;">
                     <!--是否要处理php-->
                     <!--                    <input type="hidden" name="isProcess" value="true"/>-->
-                    <input type="hidden" name="DepartmentId" value="<?php echo $projectId?>">
+                    <input type="hidden" name="ProjectId" value="<?php echo $projectId?>">
                     <input type="submit" name="submit" class="sub-btn" value="提  交"/>
                     <input type="reset" class="sub-btn" value="重  置"/>
                 </div>

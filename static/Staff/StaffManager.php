@@ -1,5 +1,12 @@
 
 <?php
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+
+
 //解决引用问题
 $dir = dirname(__FILE__);
 require_once($dir . "/../../source/DataProcess/DepartmentProcess.php");
@@ -75,12 +82,12 @@ if(isset($_POST["submit"])){
                     echo "
                     <td>
                         <form action=\"UpdateStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
-                            <input type='hidden' name='DepartmentId' value='{$staffs[$i]->getStaffId()}'>
+                            <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
                             <button class=\"sub-btn\" type='submit'>修改员工</button>
                         </form>
                         <form action=\"StaffManager.php\" method='post' style=\"display: inline;\">
                             <input type='hidden' name='isProcess' value='true'>
-                            <input type='hidden' name='DepartmentId' value='{$staffs[$i]->getStaffId()}'>
+                            <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
                             <button name=\"submit\" class=\"sub-btn btn-red\" onclick='isDeleteStaff()'  type='submit'>删除员工</button>
                         </form>
                     </td>

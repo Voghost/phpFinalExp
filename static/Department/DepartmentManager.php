@@ -1,5 +1,13 @@
 
 <?php
+
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+
+
 //解决引用问题
 $dir = dirname(__FILE__);
 require_once($dir . "/../../source/DataProcess/DepartmentProcess.php");

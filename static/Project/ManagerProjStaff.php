@@ -1,4 +1,10 @@
 <?php
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+
 $dir = dirname(__FILE__);
 require_once($dir . "/../../source/DataProcess/ProjectProcess.php");
 require_once($dir . "/../../source/DataProcess/StaffProcess.php");
@@ -80,7 +86,7 @@ if(isset($_POST["submit"])){
 
                     echo "
                         <td>
-                        <form action=\"MangerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
+                        <form action=\"ManagerProjStaff.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='deleteOrInsert' value='delete'>
                             <input type='hidden' name='StaffId' value='{$staffs[$i]->getStaffId()}'>
                             <input type='hidden' name='ProjectId' value='{$projectId}'>

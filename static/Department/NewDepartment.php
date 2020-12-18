@@ -1,3 +1,10 @@
+<?php
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>

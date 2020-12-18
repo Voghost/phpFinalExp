@@ -17,7 +17,7 @@
             <h3>查询部门</h3>
         </div>
         <div class="public-content-cont">
-
+            <input type="text" name="DepartmentName">
         </div>
     </div>
 </div>

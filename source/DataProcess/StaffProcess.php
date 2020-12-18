@@ -6,6 +6,8 @@ require_once($dir."/../../source/Entity/Staff.php");
 require_once($dir."/../../source/Entity/Department.php");
 require_once($dir."/../../source/Entity/Project.php");
 require_once($dir."/../../source/Entity/Task.php");
+require_once($dir."/../../source/Entity/Folder.php");
+require_once($dir."/../../source/DataProcess/FolderProcess.php");
 
 /**
  * 用于处理用户数据的类
@@ -31,8 +33,19 @@ class StaffProcess
         $num = (int)substr($maxStaffId, 1);
         $num = $num + 100001;
         $maxStaffId = "S" . substr($num, 1); //S -> staff 表示员工
+        $folderPath = "staff/".$staff->getStaffName(); //设置员工文件路径
 
         $staff->setStaffId($maxStaffId);
+
+
+        //新建员工专属文件夹
+        $folderProcess = new FolderProcess();
+        $folder = new Folder(null,$folderPath,"无");
+        $folderProcess->insertFolder($folder);
+        $maxFolderId = $databaseProcess->searchMax("folder","FolderId");
+
+
+        $staff->setStaffFileId($maxFolderId);
 
         $databaseProcess->insertValues("staff", $staff->getArray());
         $databaseProcess->closeConnect();
@@ -126,6 +139,18 @@ class StaffProcess
         return staffs;
     }
 
+    /**
+     * 寻找表中最大id (用于查找刚注册的id)
+     * @return string
+     */
+    public function getMaxId(): string
+    {
+        $databaseProcess = new DatabaseProcess();
+        $result =$databaseProcess->searchMax("staff","StaffId");
+        $databaseProcess->closeConnect();
+        return $result;
+
+    }
 
 
     ///////////////////////////////////////////////////////////////

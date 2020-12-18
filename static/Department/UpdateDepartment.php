@@ -1,5 +1,10 @@
 <?php
 
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+
 
 //判断是否要进行表单处理
 

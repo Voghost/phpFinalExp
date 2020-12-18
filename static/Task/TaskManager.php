@@ -1,5 +1,12 @@
 
 <?php
+
+session_start();
+//是否有权限
+if (isset($_SESSION['admin'])==false || $_SESSION["admin"]==false){
+    echo "<script>window.location.href='loginAndRegister.php';</script>";
+}
+
 //解决引用问题
 $dir = dirname(__FILE__);
 require_once($dir . "/../../source/DataProcess/TaskProcess.php");
@@ -79,7 +86,7 @@ if(isset($_POST["submit"])){
                         </form>
                         <form action=\"UpdateTask.php\" method='post' style=\"display: inline; margin-right: 5px\">
                             <input type='hidden' name='TaskId' value='{$tasks[$i]->getTaskId()}'>
-                            <button class=\"sub-btn\" type='submit'>修改部门</button>
+                            <button class=\"sub-btn\" type='submit'>修改任务</button>
                         </form>
                         <form action=\"TaskManager.php\" method='post' style=\"display: inline;\">
                             <input type='hidden' name='isProcess' value='true'>
