@@ -189,8 +189,6 @@
         }
     </style>
     <?php
-    session_start();
-
     if (isset($_GET['isLoginSuccess'])) {
         if ($_GET['isLoginSuccess'] == 'false') {
             echo "<script>alert(\"用户名或密码错误\")</script>";
